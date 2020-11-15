@@ -18,6 +18,7 @@
     <modules>
         <module>connection-pool</module>
         <module>chapter14-io</module>
+        <module>chapter13-logging</module>
     </modules>
 
     <dependencies>
