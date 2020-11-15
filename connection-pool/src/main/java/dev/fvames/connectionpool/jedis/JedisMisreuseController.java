@@ -5,7 +5,6 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @version 2020/11/5 11:34
  */
 
-@RestController
+//@RestController
 @RequestMapping("jedismisreuse")
 @Slf4j
 public class JedisMisreuseController {
