@@ -17,6 +17,7 @@
 
     <modules>
         <module>connection-pool</module>
+        <module>chapter14-io</module>
     </modules>
 
     <dependencies>
