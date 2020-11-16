@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LoggingApplication {
 
     public static void main(String[] args) {
-        System.setProperty("logging.config", "classpath:dev/fvames/logging/async/performance_async.xml");
+        System.out.println(System.getenv());
+        System.setProperty("logging.config",
+                "chapter13-logging/src/main/java/dev/fvames/logging/duplicate/multiplelevelsfilter.xml");
         SpringApplication.run(LoggingApplication.class, args);
     }
 }
