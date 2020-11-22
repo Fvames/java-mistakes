@@ -19,6 +19,7 @@
         <module>connection-pool</module>
         <module>chapter14-io</module>
         <module>chapter13-logging</module>
+        <module>chapter16-datetime</module>
     </modules>
 
     <dependencies>
