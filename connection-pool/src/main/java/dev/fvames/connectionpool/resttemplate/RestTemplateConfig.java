@@ -17,14 +17,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 
 @Slf4j
@@ -65,7 +69,16 @@ public class RestTemplateConfig {
         log.debug("create bean of org.springframework.web.client.RestTemplate");
         RestTemplate restTemplate = new RestTemplate(factory);
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
-        return restTemplate;
+
+		List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
+		for (HttpMessageConverter<?> messageConverter : messageConverters) {
+			if (messageConverter instanceof StringHttpMessageConverter) {
+				((StringHttpMessageConverter) messageConverter).setDefaultCharset(StandardCharsets.UTF_8);
+				break;
+			}
+		}
+
+		return restTemplate;
     }
 
     @Bean
