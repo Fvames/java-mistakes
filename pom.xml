@@ -20,6 +20,7 @@
         <module>chapter14-io</module>
         <module>chapter13-logging</module>
         <module>chapter16-datetime</module>
+        <module>chapter15-serialization</module>
     </modules>
 
     <dependencies>
