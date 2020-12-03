@@ -21,6 +21,7 @@
         <module>chapter13-logging</module>
         <module>chapter16-datetime</module>
         <module>chapter17-oom</module>
+        <module>chapter12-exception</module>
     </modules>
 
     <dependencies>
