@@ -22,6 +22,7 @@
         <module>chapter16-datetime</module>
         <module>chapter17-oom</module>
         <module>chapter12-exception</module>
+        <module>chapter21-redundantcode</module>
     </modules>
 
     <dependencies>
