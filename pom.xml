@@ -23,6 +23,7 @@
         <module>chapter17-oom</module>
         <module>chapter12-exception</module>
         <module>chapter21-redundantcode</module>
+        <module>chapter18-advancedfeatures</module>
     </modules>
 
     <dependencies>
