@@ -1,0 +1,1 @@
+- service 有状态的需要设置为 多例，但当 service 被注入到单例 Controller 中时，依然会是单例状态，可以设置： proxyMode = ScopedProxyMode.TARGET_CLASS)，或者通过 ApplicationContext 每次获取新的 Bean
