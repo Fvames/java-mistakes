@@ -20,7 +20,13 @@
         <module>chapter14-io</module>
         <module>chapter13-logging</module>
         <module>chapter16-datetime</module>
-        <module>chapter15-serialization</module>
+        <module>chapter17-oom</module>
+        <module>chapter12-exception</module>
+        <module>chapter21-redundantcode</module>
+        <module>chapter18-advancedfeatures</module>
+        <module>chapter19-springpart1</module>
+        <module>chapter20-springpart2</module>
+        <module>chapter11-nullvalue</module>
     </modules>
 
     <dependencies>
@@ -43,17 +49,4 @@
         </dependency>
     </dependencies>
 
-
-    <repositories>
-        <repository>
-            <id>nexus-aliyun</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

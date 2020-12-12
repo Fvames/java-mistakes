@@ -1,0 +1,3 @@
+- 太多份相同的对象导致OOM
+- 使用WeakHashMap不等于不会 OOM
+- Tomcat参数配置不合理导致OOM
