@@ -28,6 +28,7 @@
         <module>chapter20-springpart2</module>
         <module>chapter11-nullvalue</module>
         <module>chapter22-apidesign</module>
+        <module>chapter23-cachedesign</module>
     </modules>
 
     <dependencies>
