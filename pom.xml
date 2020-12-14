@@ -35,6 +35,7 @@
         <module>chapter22-apidesign</module>
         <module>chapter23-cachedesign</module>
         <module>chapter24-productionready</module>
+        <module>chapter31-java8</module>
     </modules>
 
     <dependencyManagement>
