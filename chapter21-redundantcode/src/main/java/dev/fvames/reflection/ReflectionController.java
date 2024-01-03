@@ -25,7 +25,7 @@ public class ReflectionController {
 	public void init() {
 		String requestPrefix = environment.getProperty("request.prefix");
 		if (StringUtils.isEmpty(requestPrefix)) {
-			log.error("没有配置请求地址前缀.");
+			log.error(">>没有配置请求地址前缀.");
 		}
 		BetterBankService.requestPrefix = requestPrefix;
 	}
