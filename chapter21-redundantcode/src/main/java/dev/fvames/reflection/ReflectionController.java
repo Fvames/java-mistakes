@@ -32,7 +32,7 @@ public class ReflectionController {
 
 	@PostMapping("/bank/createUser")
 	public String createUser(@RequestBody String data) {
-		log.info("createUser called with argument {}", data);
+		log.info(">> createUser called with argument {}", data);
 		return "1";
 	}
 
