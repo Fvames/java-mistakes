@@ -1,1 +1,1 @@
-# RedundantCode
+# RedundantCode 重构设计模式
