@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: mistake-web
+#  data:
+#    mongodb:
+#      host:
+#      port: 27010
+#      database:
+#      username:
+#      password:
+#      authentication-database:
+#      replica-set:
+  redis:
+    host: 192.168.101.36
+    port: 6379
+    database0: 0
+    database1: 1
+    database2: 2
