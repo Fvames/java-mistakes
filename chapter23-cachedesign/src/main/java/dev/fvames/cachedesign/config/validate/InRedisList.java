@@ -1,4 +1,4 @@
-package dev.fvames.config.validate;
+package dev.fvames.cachedesign.config.validate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -7,10 +7,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = { InRedisValidator.class })
+@Constraint(validatedBy = { InRedisListValidator.class })
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface InRedis {
+public @interface InRedisList {
 
 	String message() default "ID is not valid in the Redis cache";
 	Class<?>[] groups() default {};

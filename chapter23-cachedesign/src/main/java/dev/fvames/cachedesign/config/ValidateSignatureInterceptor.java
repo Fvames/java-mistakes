@@ -1,4 +1,4 @@
-package dev.fvames.config;
+package dev.fvames.cachedesign.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

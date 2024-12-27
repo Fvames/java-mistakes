@@ -1,4 +1,4 @@
-package dev.fvames.config;
+package dev.fvames.cachedesign.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

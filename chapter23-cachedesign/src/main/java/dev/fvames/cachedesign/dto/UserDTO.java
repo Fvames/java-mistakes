@@ -1,6 +1,6 @@
-package dev.fvames.dto;
+package dev.fvames.cachedesign.dto;
 
-import dev.fvames.config.validate.InRedis;
+import dev.fvames.cachedesign.config.validate.InRedisList;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +12,6 @@ public class UserDTO {
 	private String name;
 	private String email;
 	@NotNull
-	@InRedis(redisDatabase = "0", redisKey = "yx:orgIds")
+	@InRedisList(redisDatabase = "0", redisKey = "yx:orgIds")
 	private String orgId;
 }
