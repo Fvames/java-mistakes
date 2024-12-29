@@ -30,22 +30,7 @@ public class RequestLogInfo {
 	private Object request;
 
 	/**
-	 * 响应状态
-	 */
-	private Integer status;
-
-	/**
-	 * 响应头
-	 */
-	private Object responseHeaders;
-
-	/**
-	 * 响应数据
-	 */
-	private Object response;
-
-	/**
 	 * 接口耗时
 	 */
-	private Long cosTimeMillis;
+	private Long beginTimeMillis;
 }

@@ -3,8 +3,8 @@ package dev.fvames.web.log;
 import com.alibaba.fastjson.JSON;
 import dev.fvames.web.util.HttpLoggingUtil;
 import dev.fvames.web.util.RequestLogInfo;
+import dev.fvames.web.util.RespLogInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -19,28 +19,30 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 							 HttpServletResponse response, Object handler) {
-		startTimeThreadLocal.set(System.currentTimeMillis());
-		return true;
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest request,
-						   HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		super.postHandle(request, response, handler, modelAndView);
-		ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
-		RequestLogInfo requestLogInfo = HttpLoggingUtil.initByHttpServletRequest(requestWrapper);
-		requestLogInfo.setCosTimeMillis(startTimeThreadLocal.get());
-		HttpLoggingUtil.updateByHttpServletResponse(requestLogInfo, requestWrapper, responseWrapper);
 		log.info("2.----------------- Interceptor start ------------------");
+		ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
+		RequestLogInfo requestLogInfo = HttpLoggingUtil.initByHttpServletRequest(requestWrapper);
 		log.info(JSON.toJSONString(requestLogInfo));
-		log.info("2.----------------- Interceptor end ------------------");
+
+		startTimeThreadLocal.set(requestLogInfo.getBeginTimeMillis());
+		return true;
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request,
 								HttpServletResponse response, Object handler, Exception ex) throws Exception {
-		super.afterCompletion(request, response, handler, ex);
+		if (response instanceof ContentCachingResponseWrapper) {
+
+			ContentCachingResponseWrapper responseWrapper = (ContentCachingResponseWrapper) response;
+
+			RequestLogInfo requestLogInfo = new RequestLogInfo();
+			requestLogInfo.setBeginTimeMillis(startTimeThreadLocal.get());
+
+			RespLogInfo respLogInfo = HttpLoggingUtil.updateByHttpServletResponse(requestLogInfo, responseWrapper);
+			log.info(JSON.toJSONString(respLogInfo));
+
+		}
 		startTimeThreadLocal.remove();
+		log.info("2.----------------- Interceptor end ------------------");
 	}
 }

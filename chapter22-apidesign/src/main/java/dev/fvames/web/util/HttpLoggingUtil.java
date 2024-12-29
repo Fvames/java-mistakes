@@ -1,14 +1,11 @@
 package dev.fvames.web.util;
 
-import org.slf4j.MDC;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -17,29 +14,32 @@ import java.util.Map;
 public class HttpLoggingUtil {
 	public static RequestLogInfo initByHttpServletRequest(ContentCachingRequestWrapper requestWrapper) {
 		RequestLogInfo requestLogInfo = new RequestLogInfo();
-		requestLogInfo.setCosTimeMillis(System.currentTimeMillis());
+		requestLogInfo.setBeginTimeMillis(System.currentTimeMillis());
 		requestLogInfo.setRequestUri(requestWrapper.getRequestURI());
 		requestLogInfo.setRemoteAddr(requestWrapper.getRemoteAddr());
-		requestLogInfo.setRequestHeaders(getRequestHeaders(requestWrapper));
-		return requestLogInfo;
-	}
-
-	public static void updateByHttpServletResponse(RequestLogInfo requestLogInfo,
-												   ContentCachingRequestWrapper requestWrapper,
-												   ContentCachingResponseWrapper responseWrapper) throws IOException {
+		// requestLogInfo.setRequestHeaders(getRequestHeaders(requestWrapper));
 		String method = requestWrapper.getMethod();
 		requestLogInfo.setMethod(method);
-		MDC.put("cReqId", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 		if (method.equals(RequestMethod.GET.name())) {
 			requestLogInfo.setRequest(requestWrapper.getParameterMap());
 		} else {
 			requestLogInfo.setRequest(new String(requestWrapper.getContentAsByteArray()));
 		}
-		requestLogInfo.setStatus(responseWrapper.getStatus());
-		requestLogInfo.setResponse(new String(responseWrapper.getContentAsByteArray()));
-		responseWrapper.copyBodyToResponse();
-		requestLogInfo.setResponseHeaders(getResponsetHeaders(responseWrapper));
-		requestLogInfo.setCosTimeMillis(System.currentTimeMillis() - requestLogInfo.getCosTimeMillis());
+
+		return requestLogInfo;
+	}
+
+	public static RespLogInfo updateByHttpServletResponse(RequestLogInfo requestLogInfo,
+												   ContentCachingResponseWrapper responseWrapper) throws IOException {
+
+		RespLogInfo respLogInfo = new RespLogInfo();
+		respLogInfo.setStatus(responseWrapper.getStatus());
+		respLogInfo.setResponse(new String(responseWrapper.getContentAsByteArray()));
+		// respLogInfo.setResponseHeaders(getResponsetHeaders(responseWrapper));
+		respLogInfo.setCosTimeMillis(System.currentTimeMillis() - requestLogInfo.getBeginTimeMillis());
+
+		return respLogInfo;
+
 	}
 
 	private static Map<String, Object> getResponsetHeaders(ContentCachingResponseWrapper response) {

@@ -3,6 +3,7 @@ package dev.fvames.web.log;
 import com.alibaba.fastjson.JSON;
 import dev.fvames.web.util.HttpLoggingUtil;
 import dev.fvames.web.util.RequestLogInfo;
+import dev.fvames.web.util.RespLogInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.stereotype.Component;
@@ -19,15 +20,16 @@ public class LoggableDispatcherServlet extends DispatcherServlet {
 
 	@Override
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("3.----------------- dispatcherServlet start ------------------");
 		ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 		RequestLogInfo requestLogInfo = HttpLoggingUtil.initByHttpServletRequest(requestWrapper);
+		log.info(JSON.toJSONString(requestLogInfo));
 		try {
-			super.doDispatch(requestWrapper, responseWrapper);
+			super.doDispatch(requestWrapper, response);
 		} finally {
-			HttpLoggingUtil.updateByHttpServletResponse(requestLogInfo, requestWrapper, responseWrapper);
-			log.info("3.----------------- dispatcherServlet start ------------------");
-			log.info(JSON.toJSONString(requestLogInfo));
+			ContentCachingResponseWrapper responseWrapper = (ContentCachingResponseWrapper) response;
+			RespLogInfo respLogInfo = HttpLoggingUtil.updateByHttpServletResponse(requestLogInfo, responseWrapper);
+			log.info(JSON.toJSONString(respLogInfo));
 			log.info("3.----------------- dispatcherServlet end ------------------");
 		}
 	}

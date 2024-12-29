@@ -2,6 +2,7 @@ package dev.fvames.web.log;
 
 import com.alibaba.fastjson.JSON;
 import dev.fvames.web.util.RequestLogInfo;
+import dev.fvames.web.util.RespLogInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -34,23 +35,27 @@ public class WebLogAspect {
 				(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		RequestLogInfo requestLogInfo = new RequestLogInfo();
-		requestLogInfo.setCosTimeMillis(startTime);
+		requestLogInfo.setBeginTimeMillis(startTime);
 		requestLogInfo.setRemoteAddr(request.getRemoteAddr());
 		requestLogInfo.setRequestUri(request.getRequestURL().toString());
 		requestLogInfo.setMethod(point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
 		requestLogInfo.setRequest(Arrays.toString(point.getArgs()));
+
 		requestInfoThreadLocal.set(requestLogInfo);
+		log.info("4.----------------- aspect start ------------------");
+		log.info(JSON.toJSONString(requestLogInfo));
 	}
 
 	@AfterReturning(value = "webLog()", returning = "ret")
 	public void doAferReturning(Object ret) {
 		RequestLogInfo requestLogInfo = requestInfoThreadLocal.get();
-		requestLogInfo.setCosTimeMillis(System.currentTimeMillis() - requestLogInfo.getCosTimeMillis());
-		requestLogInfo.setResponse(ret);
-		log.info("4.----------------- aspect start ------------------");
-		log.info(JSON.toJSONString(requestLogInfo));
-		log.info("4.----------------- aspect end ------------------");
+		RespLogInfo respLogInfo = new RespLogInfo();
+		respLogInfo.setCosTimeMillis(System.currentTimeMillis() - requestLogInfo.getBeginTimeMillis());
+		respLogInfo.setResponse(ret);
+
+		log.info(JSON.toJSONString(respLogInfo));
 		requestInfoThreadLocal.remove();
+		log.info("4.----------------- aspect end ------------------");
 	}
 
 }
